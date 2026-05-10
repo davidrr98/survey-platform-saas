@@ -1,28 +1,130 @@
-# Angular specific
-/dist/
-/out-tsc/
-/tmp/
-/coverage/
-/e2e/test-output/
-/.angular/
+# ==============================================
+# FRONTEND - Angular
+# ==============================================
+
+# Build output
+frontend/dist/
+frontend/out-tsc/
+frontend/tmp/
+frontend/coverage/
+frontend/e2e/test-output/
+
+# Angular cache
+frontend/.angular/
 .angular/
 
-# Node modules and dependency files
-/node_modules/
-/package-lock.json
-/yarn.lock
+# Dependencies
+frontend/node_modules/
 
-# Environment files
-/.env
+# Lock files (elige uno y bórralo si usas el otro)
+frontend/package-lock.json
+frontend/yarn.lock
 
-# Angular CLI and build artefacts
-/.angular-cli.json
-/.ng/
+# Variables de entorno
+frontend/.env
+frontend/.env.*
+
+# Angular CLI legacy
+frontend/.angular-cli.json
+frontend/.ng/
 
 # TypeScript cache
+frontend/*.tsbuildinfo
 *.tsbuildinfo
 
+# Logs npm/yarn
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+
+# ==============================================
+# BACKEND - Spring Boot / Maven / Gradle
+# ==============================================
+
+# Maven
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+
+# Gradle
+backend/.gradle/
+backend/build/
+backend/out/
+!backend/gradle/wrapper/gradle-wrapper.jar
+
+# Variables de entorno y configuración local
+backend/.env
+backend/.env.*
+backend/src/main/resources/application-local.properties
+backend/src/main/resources/application-local.yml
+backend/src/main/resources/application-secret.properties
+
 # Logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+backend/*.log
+backend/logs/
+
+# Spring Boot ejecutable empaquetado (opcional, comenta si quieres versionarlo)
+backend/*.jar
+backend/*.war
+
+
+# ==============================================
+# IDEs y editores
+# ==============================================
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# VS Code
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Eclipse / STS
+.classpath
+.project
+.settings/
+.factorypath
+
+# NetBeans
+nbproject/
+nb-configuration.xml
+
+
+# ==============================================
+# Sistema operativo
+# ==============================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+
+# ==============================================
+# Misceláneos
+# ==============================================
+
+# Secrets / certificados
+*.pem
+*.key
+*.p12
+*.jks
+*.keystore
+
+# Docker (si aplica después)
+# docker-compose.override.yml
