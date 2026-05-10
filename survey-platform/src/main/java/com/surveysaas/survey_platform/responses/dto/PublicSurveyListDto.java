@@ -1,0 +1,15 @@
+package com.surveysaas.survey_platform.responses.dto;
+
+import lombok.Builder;
+import lombok.Data;
+
+import java.util.UUID;
+
+@Data
+@Builder
+public class PublicSurveyListDto {
+    private UUID id;
+    private String title;
+    private String description;
+    private long totalQuestions;
+}
