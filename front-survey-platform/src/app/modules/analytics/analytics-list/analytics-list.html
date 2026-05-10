@@ -1,0 +1,80 @@
+<div class="list-wrapper">
+
+  <div class="list-header">
+    <h1>Analítica</h1>
+    <p class="subtitle">Visualiza los resultados de tus encuestas activas y cerradas.</p>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="center">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="!loading && error" class="center muted">
+    <mat-icon>error_outline</mat-icon>
+    <p>No se pudieron cargar las encuestas.</p>
+  </div>
+
+  <!-- Sin datos -->
+  <div *ngIf="!loading && !error && active.length === 0 && closed.length === 0" class="center muted">
+    <mat-icon>bar_chart</mat-icon>
+    <p>No hay encuestas activas o cerradas con datos.</p>
+    <button mat-raised-button color="primary" routerLink="/surveys">Ir a encuestas</button>
+  </div>
+
+  <!-- Activas -->
+  <section *ngIf="active.length > 0">
+    <h2 class="section-title">
+      <span class="section-dot active-dot"></span>
+      Activas ({{ active.length }})
+    </h2>
+    <div class="cards-grid">
+      <mat-card
+        *ngFor="let s of active"
+        class="survey-card"
+        (click)="openAnalytics(s.id!)">
+        <mat-card-content>
+          <div class="card-row">
+            <div class="card-info">
+              <p class="card-title">{{ s.title }}</p>
+              <p class="card-desc">{{ s.description || 'Sin descripción' }}</p>
+            </div>
+            <div class="card-actions">
+              <span class="status-badge status-active">Activa</span>
+              <mat-icon class="arrow-icon">chevron_right</mat-icon>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </section>
+
+  <!-- Cerradas -->
+  <section *ngIf="closed.length > 0">
+    <h2 class="section-title">
+      <span class="section-dot closed-dot"></span>
+      Cerradas ({{ closed.length }})
+    </h2>
+    <div class="cards-grid">
+      <mat-card
+        *ngFor="let s of closed"
+        class="survey-card"
+        (click)="openAnalytics(s.id!)">
+        <mat-card-content>
+          <div class="card-row">
+            <div class="card-info">
+              <p class="card-title">{{ s.title }}</p>
+              <p class="card-desc">{{ s.description || 'Sin descripción' }}</p>
+            </div>
+            <div class="card-actions">
+              <span class="status-badge status-closed">Cerrada</span>
+              <mat-icon class="arrow-icon">chevron_right</mat-icon>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </section>
+
+</div>

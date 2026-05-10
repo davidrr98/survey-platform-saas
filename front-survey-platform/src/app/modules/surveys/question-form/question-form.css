@@ -1,0 +1,88 @@
+.form-wrapper {
+  max-width: 560px;
+  margin: 32px auto;
+  padding: 0 16px;
+}
+
+.form-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.form-header h1 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  padding: 48px 0;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+/* Opciones */
+.options-section {
+  margin: 8px 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.options-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.options-label {
+  font-size: 14px;
+  color: #555;
+  font-weight: 500;
+}
+
+.option-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.option-field {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+/* Fila orden + obligatoria */
+.row-fields {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.order-field {
+  width: 120px;
+}
+
+.required-toggle {
+  flex: 1;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}

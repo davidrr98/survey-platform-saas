@@ -1,0 +1,29 @@
+.container {
+  padding: 20px;
+}
+
+.simple-table {
+  width: 100%;
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-draft {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.status-active {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-closed {
+  background-color: #fce4ec;
+  color: #c62828;
+}

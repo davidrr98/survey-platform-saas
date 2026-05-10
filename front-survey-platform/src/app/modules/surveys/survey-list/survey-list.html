@@ -1,0 +1,73 @@
+<div class="container">
+  <!-- Header simple -->
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h1>Encuestas</h1>
+    <button mat-raised-button color="primary" (click)="goToCreate()">
+      + Nueva Encuesta
+    </button>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" style="text-align: center; padding: 40px;">
+    <p>Cargando encuestas...</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="error && !loading" style="text-align: center; padding: 40px;">
+    <p style="color: red;">Error al cargar las encuestas</p>
+    <button mat-button (click)="getSurveys()">Intentar de nuevo</button>
+  </div>
+
+  <!-- Vacío -->
+  <div *ngIf="!loading && !error && surveys.length === 0" style="text-align: center; padding: 40px;">
+    <p>No hay encuestas disponibles</p>
+    <button mat-raised-button color="primary" (click)="goToCreate()">
+      Crear primera encuesta
+    </button>
+  </div>
+
+  <!-- Lista de encuestas -->
+  <div *ngIf="!loading && !error && surveys.length > 0">
+    <table mat-table [dataSource]="surveys" class="simple-table">
+      
+      <!-- Columna Título -->
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef>Título</th>
+        <td mat-cell *matCellDef="let survey">
+          <a (click)="goToView(survey.id)" style="cursor: pointer; color: #1976d2; text-decoration: none;">
+            {{ survey.title }}
+          </a>
+        </td>
+      </ng-container>
+
+      <!-- Columna Estado -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Estado</th>
+        <td mat-cell *matCellDef="let survey">
+          <span class="status-badge" [class]="getStatusClass(survey.status)">
+            {{ getStatusName(survey.status) }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Columna Acciones -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let survey">
+          <button mat-icon-button (click)="goToEdit(survey.id)" title="Editar">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="shareSurvey(survey.id)" title="Copiar enlace público">
+            <mat-icon>share</mat-icon>
+          </button>
+          <button mat-icon-button (click)="deleteSurvey(survey.id)" title="Eliminar">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="['title', 'status', 'actions']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['title', 'status', 'actions']"></tr>
+    </table>
+  </div>
+</div>

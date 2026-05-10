@@ -1,0 +1,85 @@
+<div class="dashboard-wrapper">
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="center">
+    <mat-spinner diameter="48"></mat-spinner>
+    <p>Cargando resultados...</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="!loading && error" class="center">
+    <mat-icon class="big-icon">error_outline</mat-icon>
+    <p>No se pudieron cargar los resultados.</p>
+    <button mat-raised-button (click)="goBack()">Volver</button>
+  </div>
+
+  <!-- Dashboard -->
+  <div *ngIf="!loading && !error && results">
+
+    <!-- Header -->
+    <div class="dashboard-header">
+      <button mat-icon-button (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <div class="header-info">
+        <h1>{{ results.title }}</h1>
+        <div class="header-meta">
+          <span class="live-indicator" *ngIf="connected">
+            <span class="live-dot"></span> En vivo
+          </span>
+          <span class="disconnected-indicator" *ngIf="!connected">
+            <mat-icon>wifi_off</mat-icon> Reconectando...
+          </span>
+        </div>
+      </div>
+      <span class="spacer"></span>
+      <div class="total-responses">
+        <span class="total-number">{{ results.totalResponses }}</span>
+        <span class="total-label">respuestas</span>
+      </div>
+    </div>
+
+    <!-- Preguntas -->
+    <div class="questions-grid">
+      <mat-card *ngFor="let q of results.questionResults" class="question-card">
+        <mat-card-header>
+          <mat-card-title class="question-title">{{ q.text }}</mat-card-title>
+          <span class="type-badge">{{ q.type }}</span>
+        </mat-card-header>
+
+        <mat-card-content>
+
+          <!-- Opciones con barras (SINGLE_CHOICE / MULTIPLE_CHOICE) -->
+          <div *ngIf="hasOptions(q)" class="options-list">
+            <div *ngFor="let opt of q.optionResults" class="option-row">
+              <div class="option-header">
+                <span class="option-text">{{ opt.text }}</span>
+                <span class="option-stats">
+                  {{ opt.count }} <small>({{ opt.percentage | number:'1.0-1' }}%)</small>
+                </span>
+              </div>
+              <mat-progress-bar mode="determinate" [value]="opt.percentage" class="option-bar">
+              </mat-progress-bar>
+            </div>
+          </div>
+
+          <!-- Promedio (NUMERIC) -->
+          <div *ngIf="isNumeric(q)" class="average-block">
+            <span class="average-value">
+              {{ q.average !== null ? (q.average | number:'1.0-2') : '—' }}
+            </span>
+            <span class="average-label">promedio</span>
+          </div>
+
+          <!-- Texto abierto (TEXT) -->
+          <div *ngIf="isOpenType(q)" class="open-type-msg">
+            <mat-icon>chat_bubble_outline</mat-icon>
+            <p>Pregunta de texto abierto — las respuestas no se agregan en gráficas.</p>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+  </div>
+</div>

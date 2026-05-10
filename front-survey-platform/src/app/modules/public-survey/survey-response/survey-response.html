@@ -1,0 +1,113 @@
+<div class="response-wrapper">
+
+  <!-- Cargando -->
+  <div *ngIf="loading" class="center">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="!loading && error" class="center">
+    <mat-icon class="big-icon">error_outline</mat-icon>
+    <p>No se pudo cargar la encuesta.</p>
+  </div>
+
+  <!-- Enviada con éxito -->
+  <div *ngIf="submitted" class="center success">
+    <mat-icon class="big-icon">check_circle</mat-icon>
+    <h2>¡Respuestas enviadas!</h2>
+    <p>Gracias por completar la encuesta.</p>
+  </div>
+
+  <!-- Cerrada -->
+  <div *ngIf="!loading && !error && !submitted && isClosed()" class="center">
+    <mat-icon class="big-icon">lock</mat-icon>
+    <h2>Encuesta cerrada</h2>
+    <p>Esta encuesta ya no está recibiendo respuestas.</p>
+  </div>
+
+  <!-- Borrador -->
+  <div *ngIf="!loading && !error && !submitted && isDraft()" class="center">
+    <mat-icon class="big-icon">edit_note</mat-icon>
+    <h2>Encuesta no disponible</h2>
+    <p>Esta encuesta aún no está publicada.</p>
+  </div>
+
+  <!-- Formulario activo -->
+  <div *ngIf="!loading && !error && !submitted && survey && !isClosed() && !isDraft()">
+
+    <div class="survey-header">
+      <h1>{{ survey.title }}</h1>
+      <p *ngIf="survey.description" class="survey-description">{{ survey.description }}</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <mat-card *ngFor="let q of questions; let i = index" class="question-card">
+        <mat-card-content>
+
+          <p class="question-text">
+            <span class="question-number">{{ i + 1 }}.</span>
+            {{ q.text }}
+            <span *ngIf="q.required" class="required-mark">*</span>
+          </p>
+
+          <!-- TEXTO -->
+          <mat-form-field *ngIf="q.type === QuestionType.TEXT" appearance="outline" class="full-width">
+            <mat-label>Tu respuesta</mat-label>
+            <textarea matInput [formControlName]="q.id!" rows="3"></textarea>
+          </mat-form-field>
+
+          <!-- SELECCIÓN ÚNICA -->
+          <mat-radio-group *ngIf="q.type === QuestionType.SINGLE_CHOICE" [formControlName]="q.id!" class="option-group">
+            <mat-radio-button *ngFor="let opt of q.options" [value]="opt.id" class="option-item">
+              {{ opt.text }}
+            </mat-radio-button>
+          </mat-radio-group>
+
+          <!-- SELECCIÓN MÚLTIPLE -->
+          <div *ngIf="q.type === QuestionType.MULTIPLE_CHOICE" class="option-group">
+            <mat-checkbox
+              *ngFor="let opt of q.options; let oi = index"
+              [formControl]="$any(optionsArray(q.id!).at(oi))"
+              class="option-item">
+              {{ opt.text }}
+            </mat-checkbox>
+          </div>
+
+          <!-- SÍ / NO -->
+          <mat-radio-group *ngIf="q.type === QuestionType.YES_NO" [formControlName]="q.id!" class="option-group">
+            <mat-radio-button value="YES" class="option-item">Sí</mat-radio-button>
+            <mat-radio-button value="NO" class="option-item">No</mat-radio-button>
+          </mat-radio-group>
+
+          <!-- NUMÉRICO -->
+          <mat-form-field *ngIf="q.type === QuestionType.NUMERIC" appearance="outline" class="numeric-field">
+            <mat-label>Tu respuesta</mat-label>
+            <input matInput type="number" [formControlName]="q.id!" min="1" placeholder="Ej: 4">
+          </mat-form-field>
+
+          <!-- CALIFICACIÓN -->
+          <div *ngIf="q.type === QuestionType.RATING" class="rating-group">
+            <button
+              *ngFor="let r of ratings"
+              type="button"
+              mat-mini-fab
+              [color]="getRating(q.id!) >= r ? 'primary' : undefined"
+              (click)="setRating(q.id!, r)"
+              class="rating-btn">
+              {{ r }}
+            </button>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+
+      <div class="submit-row">
+        <button type="submit" mat-raised-button color="primary" [disabled]="submitting">
+          <mat-icon>send</mat-icon>
+          {{ submitting ? 'Enviando...' : 'Enviar respuestas' }}
+        </button>
+      </div>
+    </form>
+
+  </div>
+</div>

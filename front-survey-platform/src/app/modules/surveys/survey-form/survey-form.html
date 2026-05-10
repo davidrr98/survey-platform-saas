@@ -1,0 +1,44 @@
+<div class="form-wrapper">
+
+  <div class="form-header">
+    <button mat-icon-button (click)="cancel()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1>{{ isEditing ? 'Editar encuesta' : 'Nueva encuesta' }}</h1>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <form *ngIf="!loading" [formGroup]="form" (ngSubmit)="submit()">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Título</mat-label>
+      <input matInput formControlName="title" placeholder="Título de la encuesta">
+      <mat-error *ngIf="form.get('title')?.hasError('required')">El título es requerido</mat-error>
+      <mat-error *ngIf="form.get('title')?.hasError('minlength')">Mínimo 5 caracteres</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Descripción (opcional)</mat-label>
+      <textarea matInput formControlName="description" rows="3"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Estado</mat-label>
+      <mat-select formControlName="status">
+        <mat-option *ngFor="let s of statuses" [value]="s">{{ statusLabels[s] }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="form-actions">
+      <button type="button" mat-button (click)="cancel()">Cancelar</button>
+      <button type="submit" mat-raised-button color="primary" [disabled]="loading">
+        {{ isEditing ? 'Actualizar' : 'Crear' }}
+      </button>
+    </div>
+
+  </form>
+
+</div>

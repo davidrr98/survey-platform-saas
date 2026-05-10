@@ -1,0 +1,43 @@
+<div class="list-wrapper">
+
+  <div class="list-header">
+    <h1>Encuestas disponibles</h1>
+    <p class="subtitle">Selecciona una encuesta para responderla.</p>
+  </div>
+
+  <!-- Cargando -->
+  <div *ngIf="loading" class="center">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="!loading && error" class="center muted">
+    <mat-icon>error_outline</mat-icon>
+    <p>No se pudieron cargar las encuestas.</p>
+  </div>
+
+  <!-- Sin encuestas -->
+  <div *ngIf="!loading && !error && surveys.length === 0" class="center muted">
+    <mat-icon>inbox</mat-icon>
+    <p>No hay encuestas disponibles en este momento.</p>
+  </div>
+
+  <!-- Lista -->
+  <div *ngIf="!loading && !error && surveys.length > 0" class="cards-grid">
+    <mat-card
+      *ngFor="let s of surveys"
+      class="survey-card"
+      (click)="open(s.id!)">
+      <mat-card-content>
+        <div class="card-row">
+          <div class="card-info">
+            <p class="card-title">{{ s.title }}</p>
+            <p class="card-desc">{{ s.description || 'Sin descripción' }}</p>
+          </div>
+          <mat-icon class="arrow-icon">chevron_right</mat-icon>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+</div>

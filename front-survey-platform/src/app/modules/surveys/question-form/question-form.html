@@ -1,0 +1,73 @@
+<div class="form-wrapper">
+
+  <div class="form-header">
+    <button mat-icon-button (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1>{{ isEditing ? 'Editar pregunta' : 'Nueva pregunta' }}</h1>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <form *ngIf="!loading" [formGroup]="form" (ngSubmit)="submit()">
+
+    <!-- Tipo -->
+    <mat-form-field appearance="outline">
+      <mat-label>Tipo de pregunta</mat-label>
+      <mat-select formControlName="type">
+        <mat-option *ngFor="let t of types" [value]="t">{{ typeLabels[t] }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Texto -->
+    <mat-form-field appearance="outline">
+      <mat-label>Pregunta</mat-label>
+      <textarea matInput formControlName="text" rows="3" placeholder="Escribe la pregunta..."></textarea>
+      <mat-error *ngIf="form.get('text')?.hasError('required')">La pregunta es requerida</mat-error>
+      <mat-error *ngIf="form.get('text')?.hasError('minlength')">Mínimo 5 caracteres</mat-error>
+    </mat-form-field>
+
+    <!-- Opciones (solo para selección) -->
+    <div *ngIf="needsOptions()" class="options-section">
+      <div class="options-header">
+        <span class="options-label">Opciones</span>
+        <button type="button" mat-stroked-button (click)="addOption()">
+          <mat-icon>add</mat-icon> Agregar opción
+        </button>
+      </div>
+
+      <div *ngFor="let opt of options.controls; let i = index" class="option-row">
+        <mat-form-field appearance="outline" class="option-field">
+          <mat-label>Opción {{ i + 1 }}</mat-label>
+          <input matInput [formControl]="$any(opt)" placeholder="Texto de la opción">
+          <mat-error *ngIf="opt.hasError('required')">Requerida</mat-error>
+        </mat-form-field>
+        <button type="button" mat-icon-button color="warn" (click)="removeOption(i)" [disabled]="options.length <= 2">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- Fila: orden + obligatoria -->
+    <div class="row-fields">
+      <mat-form-field appearance="outline" class="order-field">
+        <mat-label>Orden</mat-label>
+        <input matInput type="number" formControlName="questionOrder" min="1">
+      </mat-form-field>
+
+      <div class="required-toggle">
+        <mat-slide-toggle formControlName="required">Obligatoria</mat-slide-toggle>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" mat-button (click)="goBack()">Cancelar</button>
+      <button type="submit" mat-raised-button color="primary" [disabled]="loading">
+        {{ isEditing ? 'Actualizar' : 'Crear' }}
+      </button>
+    </div>
+
+  </form>
+</div>

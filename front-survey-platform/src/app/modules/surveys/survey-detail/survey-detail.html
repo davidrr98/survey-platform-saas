@@ -1,0 +1,100 @@
+<div class="detail-wrapper">
+
+  <div *ngIf="loading" class="loading">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <div *ngIf="!loading && survey">
+
+    <!-- Header -->
+    <div class="detail-header">
+      <button mat-icon-button routerLink="/surveys">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <h1>{{ survey.title }}</h1>
+      <span class="spacer"></span>
+      <button mat-stroked-button [routerLink]="['/analytics', surveyId]">
+        <mat-icon>bar_chart</mat-icon> Analytics
+      </button>
+      <button mat-stroked-button (click)="edit()">
+        <mat-icon>edit</mat-icon> Editar
+      </button>
+      <button mat-stroked-button color="warn" (click)="delete()">
+        <mat-icon>delete</mat-icon> Eliminar
+      </button>
+    </div>
+
+    <!-- Info de la encuesta -->
+    <mat-card class="info-card">
+      <mat-card-content>
+        <div class="field">
+          <span class="label">Estado</span>
+          <span class="status-badge status-{{ survey.status.toLowerCase() }}">
+            {{ getStatusLabel(survey.status) }}
+          </span>
+        </div>
+        <div class="field">
+          <span class="label">Descripción</span>
+          <p class="value">{{ survey.description || 'Sin descripción' }}</p>
+        </div>
+        <div class="field">
+          <span class="label">Creada</span>
+          <span class="value">{{ formatDate(survey.createdAt) }}</span>
+        </div>
+        <div class="field">
+          <span class="label">Actualizada</span>
+          <span class="value">{{ formatDate(survey.updatedAt) }}</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Preguntas -->
+    <div class="section-header">
+      <h2>Preguntas ({{ questions.length }})</h2>
+      <span class="spacer"></span>
+      <button mat-raised-button color="primary" (click)="addQuestion()">
+        <mat-icon>add</mat-icon> Agregar pregunta
+      </button>
+    </div>
+
+    <div *ngIf="loadingQuestions" class="loading">
+      <mat-spinner diameter="32"></mat-spinner>
+    </div>
+
+    <div *ngIf="!loadingQuestions && questions.length === 0" class="empty-questions">
+      <mat-icon>quiz</mat-icon>
+      <p>Esta encuesta no tiene preguntas aún.</p>
+    </div>
+
+    <mat-card *ngFor="let q of questions" class="question-card">
+      <mat-card-content>
+        <div class="question-row">
+          <span class="question-order">{{ q.questionOrder }}</span>
+          <div class="question-body">
+            <div class="question-meta">
+              <span class="type-badge">{{ getTypeLabel(q.type) }}</span>
+              <span *ngIf="q.required" class="required-badge">Obligatoria</span>
+            </div>
+            <p class="question-text">{{ q.text }}</p>
+            <div *ngIf="q.options && q.options.length > 0" class="options">
+              <span *ngFor="let opt of q.options" class="option-chip">{{ opt.text }}</span>
+            </div>
+          </div>
+          <button mat-icon-button (click)="editQuestion(q.id!)" matTooltip="Editar pregunta">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteQuestion(q.id!)" matTooltip="Eliminar pregunta">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+
+  <div *ngIf="!loading && !survey" class="not-found">
+    <p>Encuesta no encontrada.</p>
+    <button mat-raised-button routerLink="/surveys">Volver a la lista</button>
+  </div>
+
+</div>
