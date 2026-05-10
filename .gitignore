@@ -3,39 +3,39 @@
 # ==============================================
 
 # Build output
-frontend/dist/
-frontend/out-tsc/
-frontend/tmp/
-frontend/coverage/
-frontend/e2e/test-output/
+front-survey-platform/dist/
+front-survey-platform/out-tsc/
+front-survey-platform/tmp/
+front-survey-platform/coverage/
+front-survey-platform/e2e/test-output/
 
 # Angular cache
-frontend/.angular/
-.angular/
+front-survey-platform/.angular/
+front-survey-platform/.angular/
 
 # Dependencies
-frontend/node_modules/
+front-survey-platform/node_modules/
 
 # Lock files (elige uno y bórralo si usas el otro)
-frontend/package-lock.json
-frontend/yarn.lock
+front-survey-platform/package-lock.json
+front-survey-platform/yarn.lock
 
 # Variables de entorno
-frontend/.env
-frontend/.env.*
+front-survey-platform/.env
+front-survey-platform/.env.*
 
 # Angular CLI legacy
-frontend/.angular-cli.json
-frontend/.ng/
+front-survey-platform/.angular-cli.json
+front-survey-platform/.ng/
 
 # TypeScript cache
-frontend/*.tsbuildinfo
+front-survey-platform/*.tsbuildinfo
 *.tsbuildinfo
 
 # Logs npm/yarn
-frontend/npm-debug.log*
-frontend/yarn-debug.log*
-frontend/yarn-error.log*
+front-survey-platform/npm-debug.log*
+front-survey-platform/yarn-debug.log*
+front-survey-platform/yarn-error.log*
 
 
 # ==============================================
