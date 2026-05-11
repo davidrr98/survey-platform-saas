@@ -71,6 +71,14 @@
             <span class="average-label">promedio</span>
           </div>
 
+          <!-- Promedio de calificación (RATING) -->
+          <div *ngIf="isRating(q)" class="average-block">
+            <span class="average-value">
+              {{ q.average !== null ? (q.average | number:'1.0-1') : '—' }}
+            </span>
+            <span class="average-label">promedio de calificación</span>
+          </div>
+
           <!-- Texto abierto (TEXT) -->
           <div *ngIf="isOpenType(q)" class="open-type-msg">
             <mat-icon>chat_bubble_outline</mat-icon>

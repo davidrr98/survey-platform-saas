@@ -1,4 +1,4 @@
-package com.surveysaas.survey_platform.questions.controller;
+package com.surveysaas.survey_platform.shared.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

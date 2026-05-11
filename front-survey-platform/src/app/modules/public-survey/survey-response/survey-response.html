@@ -90,8 +90,7 @@
             <button
               *ngFor="let r of ratings"
               type="button"
-              mat-mini-fab
-              [color]="getRating(q.id!) >= r ? 'primary' : undefined"
+              [class.rating-active]="getRating(q.id!) >= r"
               (click)="setRating(q.id!, r)"
               class="rating-btn">
               {{ r }}

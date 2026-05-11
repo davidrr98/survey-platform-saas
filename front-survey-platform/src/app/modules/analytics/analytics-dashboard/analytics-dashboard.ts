@@ -80,6 +80,10 @@ export class AnalyticsDashboard implements OnInit, OnDestroy {
     return q.type === 'NUMERIC';
   }
 
+  isRating(q: QuestionResult): boolean {
+    return q.type === 'RATING';
+  }
+
   goBack(): void {
     this.router.navigate(['/analytics']);
   }

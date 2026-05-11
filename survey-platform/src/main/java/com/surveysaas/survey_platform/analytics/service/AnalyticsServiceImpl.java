@@ -3,7 +3,6 @@ package com.surveysaas.survey_platform.analytics.service;
 import com.surveysaas.survey_platform.analytics.dto.OptionResultDto;
 import com.surveysaas.survey_platform.analytics.dto.QuestionResultDto;
 import com.surveysaas.survey_platform.analytics.dto.SurveyResultsDto;
-import com.surveysaas.survey_platform.questions.domain.QuestionType;
 import com.surveysaas.survey_platform.questions.repository.QuestionRepository;
 import com.surveysaas.survey_platform.responses.domain.Answer;
 import com.surveysaas.survey_platform.responses.repository.ResponseRepository;
@@ -57,8 +56,9 @@ public class AnalyticsServiceImpl implements AnalyticsService {
         List<OptionResultDto> optionResults = List.of();
 
         switch (question.getType()) {
-            case NUMERIC -> average = calculateAverage(question.getAnswers());
+            case NUMERIC, RATING -> average = calculateAverage(question.getAnswers());
             case SINGLE_CHOICE, MULTIPLE_CHOICE -> optionResults = buildOptionResults(question, totalResponses, surveyId);
+            case YES_NO -> optionResults = buildYesNoResults(question.getAnswers(), totalResponses);
             case TEXT -> { /* sin promedio ni opciones */ }
         }
 
@@ -95,6 +95,31 @@ public class AnalyticsServiceImpl implements AnalyticsService {
                             .build();
                 })
                 .toList();
+    }
+
+    private List<OptionResultDto> buildYesNoResults(List<Answer> answers, long totalResponses) {
+        long yesCount = answers.stream()
+                .map(Answer::getTextValue)
+                .filter(v -> v != null && (v.equalsIgnoreCase("true")
+                        || v.equalsIgnoreCase("si")
+                        || v.equalsIgnoreCase("sí")
+                        || v.equalsIgnoreCase("yes")))
+                .count();
+        long noCount = answers.stream()
+                .map(Answer::getTextValue)
+                .filter(v -> v != null && (v.equalsIgnoreCase("false")
+                        || v.equalsIgnoreCase("no")))
+                .count();
+
+        double yesPercentage = totalResponses > 0
+                ? Math.round((yesCount * 100.0 / totalResponses) * 10.0) / 10.0 : 0.0;
+        double noPercentage = totalResponses > 0
+                ? Math.round((noCount * 100.0 / totalResponses) * 10.0) / 10.0 : 0.0;
+
+        return List.of(
+                OptionResultDto.builder().optionId(null).text("Sí").count(yesCount).percentage(yesPercentage).build(),
+                OptionResultDto.builder().optionId(null).text("No").count(noCount).percentage(noPercentage).build()
+        );
     }
 
     private Double calculateAverage(List<Answer> answers) {

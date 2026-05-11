@@ -60,6 +60,6 @@ El archivo de entorno se encuentra en `src/env/enviroment.ts`. Ajusta la variabl
 
 ```ts
 export const environment = {
-  apiUrl: 'http://localhost:8080/api'
+  apiUrl: 'http://localhost:8081/api'
 };
 ```

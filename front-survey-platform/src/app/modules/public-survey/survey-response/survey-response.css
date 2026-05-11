@@ -69,6 +69,30 @@
   flex-wrap: wrap;
 }
 
+.rating-btn {
+  width: 44px;
+  height: 44px;
+  border: 2px solid #bdbdbd;
+  border-radius: 50%;
+  background: #fff;
+  color: #757575;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.rating-btn:hover {
+  border-color: #1976d2;
+  color: #1976d2;
+}
+
+.rating-btn.rating-active {
+  background: #1976d2;
+  border-color: #1976d2;
+  color: #fff;
+}
+
 .submit-row {
   display: flex;
   justify-content: center;

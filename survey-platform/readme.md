@@ -60,9 +60,9 @@ cd survey-platform
 mvn spring-boot:run
 ```
 
-La API queda disponible en `http://localhost:8080`
+La API queda disponible en `http://localhost:8081`
 
-La documentación Swagger en `http://localhost:8080/swagger-ui/index.html`
+La documentación Swagger en `http://localhost:8081/swagger-ui/index.html`
 
 ---
 
@@ -168,17 +168,17 @@ Cada módulo sigue la misma estructura interna:
 
 ### Listar encuestas disponibles
 ```bash
-curl http://localhost:8080/api/v1/public/surveys
+curl http://localhost:8081/api/v1/public/surveys
 ```
 
 ### Ver una encuesta
 ```bash
-curl http://localhost:8080/api/v1/public/surveys/aaaaaaaa-0000-0000-0000-000000000001
+curl http://localhost:8081/api/v1/public/surveys/aaaaaaaa-0000-0000-0000-000000000001
 ```
 
 ### Responder una encuesta
 ```bash
-curl -X POST http://localhost:8080/api/v1/public/surveys/aaaaaaaa-0000-0000-0000-000000000001/respond \
+curl -X POST http://localhost:8081/api/v1/public/surveys/aaaaaaaa-0000-0000-0000-000000000001/respond \
   -H "Content-Type: application/json" \
   -d '{
     "answers": [
@@ -195,10 +195,10 @@ curl -X POST http://localhost:8080/api/v1/public/surveys/aaaaaaaa-0000-0000-0000
 ### Ver resultados en tiempo real
 ```bash
 # Terminal 1 — suscribirse al stream
-curl -N http://localhost:8080/api/v1/surveys/aaaaaaaa-0000-0000-0000-000000000001/analytics/stream
+curl -N http://localhost:8081/api/v1/surveys/aaaaaaaa-0000-0000-0000-000000000001/analytics/stream
 
 # Terminal 2 — responder (verás el evento llegar en Terminal 1)
-curl -X POST http://localhost:8080/api/v1/public/surveys/aaaaaaaa-0000-0000-0000-000000000001/respond \
+curl -X POST http://localhost:8081/api/v1/public/surveys/aaaaaaaa-0000-0000-0000-000000000001/respond \
   -H "Content-Type: application/json" \
   -d '{ "answers": [...] }'
 ```
@@ -259,5 +259,5 @@ En caso de error:
 Swagger UI disponible en:
 
 ```
-http://localhost:8080/swagger-ui/index.html
+http://localhost:8081/swagger-ui/index.html
 ```
