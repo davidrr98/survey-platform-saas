@@ -25,6 +25,22 @@ survey-platform-saas/
 
 ---
 
+## Arquitectura
+
+### Contexto
+![C4 Context](Diagramas/Encuestas%20SAAS-C4%20-%20Context.png)
+
+### Contenedores
+![C4 Container](Diagramas/Encuestas%20SAAS-C4%20-%20Container.png)
+
+### Componentes
+![C4 Component](Diagramas/Encuestas%20SAAS-C4%20-%20Component.png)
+
+### Propuesta Cloud
+![Cloud](Diagramas/Encuestas%20SAAS-Cloud%20propuesta.png)
+
+---
+
 ## Despliegue con Docker Compose
 
 ### Requisitos previos
